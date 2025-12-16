@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coffee Page</title>
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
+  <body>
+    <header role="banner">
+      <a href="#" class="logo" aria-label="IMAJI Coffee homepage"
+        ><h1>IMAJI Coffee.</h1></a
+      >
+      <nav aria-label="Primary navigation">
+        <ul>
+          <li><a href="" aria-current="page">Home</a></li>
+          <li><a href="">Story</a></li>
+          <li><a href="">Menu</a></li>
+          <li><a href="">Space</a></li>
+          <li><a href="">Community</a></li>
+          <li><a href="">News</a></li>
+          <div class="nav-buttons">
+            <li>
+              <a href="" class="nav-button__base nav-button__cart">Cart</a>
+            </li>
+            <li>
+              <a href="" class="nav-button__base nav-button__signin">Sign In</a>
+            </li>
+          </div>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="menu">
+        <div class="menu-hero">
+          <h1>Our Menu</h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Consequuntur mollitia voluptatibus quod ab sunt asperiores dolores
+            in animi, quas nulla rerum vero est, minus adipisci libero aperiam
+            odio eius nihil.
+          </p>
+        </div>
+        <div class="menu-form__filters">
+          <form>
+            <div>
+              <label for="form__search">Search</label>
+              <button>Clear</button>
+              <input
+                name="form__search"
+                id="form__search"
+                type="text"
+                placeholder="Enter keyword"
+              />
+            </div>
+            <div>
+              <label for="form__filter-price">Price</label>
+              <button>Clear</button>
+              <select name="form__filter-price" id="form__filter-price">
+                <option value="10">Under $10</option>
+              </select>
+            </div>
+            <div>
+              <label for="form__sort">Sort By</label>
+              <button>Clear</button>
+              <select name="form__sort" id="form__sort">
+                <option value="best">Best Selling</option>
+              </select>
+            </div>
+          </form>
+          <nav>
+            <ul>
+              <li><button>Coffee and Beverage</button></li>
+              <li><button>Food and Snack</button></li>
+              <li><button>IMAJI Coffee at Home</button></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="product-cards">
+          <ul>
+            <li>
+              <article class="product-card">
+                <img
+                  class="product-card__image"
+                  src="./img/ristretto.png"
+                  alt="ristretto_img"
+                  height="300"
+                  width="300"
+                />
+                <span class="product-card__label">Sale</span>
+                <h4 class="product-card__heading">Ristretto Bianco</h4>
+                <p class="product-card__subheading">
+                  Only at Cafe and Delivery
+                </p>
+                <p class="product-card__price">
+                  $5.00
+                  <span class="product-card__price__former"
+                    ><small><s>$6.00</s></small></span
+                  >
+                </p>
+                <p class="product-card__ad"><sup>Get 20% Off in App</sup></p>
+              </article>
+            </li>
+            <li>
+              <article class="product-card">
+                <img
+                  class="product-card__image"
+                  src="./img/iced_creamy.png"
+                  alt="iced_creamy_img"
+                  height="300"
+                  width="300"
+                />
+                <span class="product-card__label">Sale</span>
+                <h4 class="product-card__heading">Iced Creamy Latte</h4>
+                <p class="product-card__subheading">
+                  Only at Cafe and Delivery
+                </p>
+                <p class="product-card__price">
+                  $5.00
+                  <span class="product-card__price__former"
+                    ><small><s>$6.00</s></small></span
+                  >
+                </p>
+                <p class="product-card__ad"><sup>Get 20% Off in App</sup></p>
+              </article>
+            </li>
+            <li>
+              <article class="product-card">
+                <img
+                  class="product-card__image"
+                  src="./img/capuccino.png"
+                  alt="cappuccino_img"
+                  height="300"
+                  width="300"
+                />
+                <span class="product-card__label">Sale</span>
+                <h4 class="product-card__heading">Cappuccino</h4>
+                <p class="product-card__subheading">
+                  Only at Cafe and Delivery
+                </p>
+                <p class="product-card__price">
+                  $5.00
+                  <span class="product-card__price__former"
+                    ><small><s>$6.00</s></small></span
+                  >
+                </p>
+                <p class="product-card__ad"><sup>Get 20% Off in App</sup></p>
+              </article>
+            </li>
+            <li>
+              <article class="product-card">
+                <img
+                  class="product-card__image"
+                  src="./img/iced_long_black.png"
+                  alt="iced_long_black_img"
+                  height="300"
+                  width="300"
+                />
+                <span class="product-card__label">Sale</span>
+                <h4 class="product-card__heading">Iced Long Black</h4>
+                <p class="product-card__subheading">
+                  Only at Cafe and Delivery
+                </p>
+                <p class="product-card__price">
+                  $5.00
+                  <span class="product-card__price__former"
+                    ><small><s>$6.00</s></small></span
+                  >
+                </p>
+                <p class="product-card__ad"><sup>Get 20% Off in App</sup></p>
+              </article>
+            </li>
+            <li>
+              <article class="product-card">
+                <img
+                  class="product-card__image"
+                  src="./img/milk_coffee_regal.png"
+                  alt="milk_coffee_regal_img"
+                  height="300"
+                  width="300"
+                />
+                <span class="product-card__label">Sale</span>
+                <h4 class="product-card__heading">Milk Coffee Regal</h4>
+                <p class="product-card__subheading">
+                  Only at Cafe and Delivery
+                </p>
+                <p class="product-card__price">
+                  $5.00
+                  <span class="product-card__price__former"
+                    ><small><s>$6.00</s></small></span
+                  >
+                </p>
+                <p class="product-card__ad"><sup>Get 20% Off in App</sup></p>
+              </article>
+            </li>
+            <li>
+              <article class="product-card">
+                <img
+                  class="product-card__image"
+                  src="./img/orange_juice.png"
+                  alt="orange_juice_img"
+                  height="300"
+                  width="300"
+                />
+                <span class="product-card__label">Sale</span>
+                <h4 class="product-card__heading">Orange Juice</h4>
+                <p class="product-card__subheading">
+                  Only at Cafe and Delivery
+                </p>
+                <p class="product-card__price">
+                  $5.00
+                  <span class="product-card__price__former"
+                    ><small><s>$6.00</s></small></span
+                  >
+                </p>
+                <p class="product-card__ad"><sup>Get 20% Off in App</sup></p>
+              </article>
+            </li>
+            <li>
+              <article class="product-card">
+                <img
+                  class="product-card__image"
+                  src="./img/soda_beverage.png"
+                  alt="soda_beverage_img"
+                  height="300"
+                  width="300"
+                />
+                <span class="product-card__label">Sale</span>
+                <h4 class="product-card__heading">Soda Beverage</h4>
+                <p class="product-card__subheading">
+                  Only at Cafe and Delivery
+                </p>
+                <p class="product-card__price">
+                  $5.00
+                  <span class="product-card__price__former"
+                    ><small><s>$6.00</s></small></span
+                  >
+                </p>
+                <p class="product-card__ad"><sup>Get 20% Off in App</sup></p>
+              </article>
+            </li>
+            <li>
+              <article class="product-card">
+                <img
+                  class="product-card__image"
+                  src="./img/iced_with_milk.png"
+                  alt="iced_coffee_with_milk_img"
+                  height="300"
+                  width="300"
+                />
+                <span class="product-card__label">Sale</span>
+                <h4 class="product-card__heading">Iced Coffee With Milk</h4>
+                <p class="product-card__subheading">
+                  Only at Cafe and Delivery
+                </p>
+                <p class="product-card__price">
+                  $5.00
+                  <span class="product-card__price__former"
+                    ><small><s>$6.00</s></small></span
+                  >
+                </p>
+                <p class="product-card__ad"><sup>Get 20% Off in App</sup></p>
+              </article>
+            </li>
+            <li>
+              <article class="product-card">
+                <img
+                  class="product-card__image"
+                  src="./img/iced_americano.png"
+                  alt="iced_americano_img"
+                  height="300"
+                  width="300"
+                />
+                <span class="product-card__label">Sale</span>
+                <h4 class="product-card__heading">Iced Americano</h4>
+                <p class="product-card__subheading">
+                  Only at Cafe and Delivery
+                </p>
+                <p class="product-card__price">
+                  $5.00
+                  <span class="product-card__price__former"
+                    ><small><s>$6.00</s></small></span
+                  >
+                </p>
+                <p class="product-card__ad"><sup>Get 20% Off in App</sup></p>
+              </article>
+            </li>
+            <li>
+              <article class="product-card">
+                <img
+                  class="product-card__image"
+                  src="./img/vegan_iced_latte.png"
+                  alt="vegan_iced_latte_img"
+                  height="300"
+                  width="300"
+                />
+                <span class="product-card__label">Sale</span>
+                <h4 class="product-card__heading">Vegan Iced Latte</h4>
+                <p class="product-card__subheading">
+                  Only at Cafe and Delivery
+                </p>
+                <p class="product-card__price">
+                  $5.00
+                  <span class="product-card__price__former"
+                    ><small><s>$6.00</s></small></span
+                  >
+                </p>
+                <p class="product-card__ad"><sup>Get 20% Off in App</sup></p>
+              </article>
+            </li>
+            <li>
+              <article class="product-card">
+                <img
+                  class="product-card__image"
+                  src="./img/iced_chokolate.png"
+                  alt="iced_chocolate_img"
+                  height="300"
+                  width="300"
+                />
+                <span class="product-card__label">Sale</span>
+                <h4 class="product-card__heading">Iced Chocolate</h4>
+                <p class="product-card__subheading">
+                  Only at Cafe and Delivery
+                </p>
+                <p class="product-card__price">
+                  $5.00
+                  <span class="product-card__price__former"
+                    ><small><s>$6.00</s></small></span
+                  >
+                </p>
+                <p class="product-card__ad"><sup>Get 20% Off in App</sup></p>
+              </article>
+            </li>
+            <li>
+              <article class="product-card">
+                <img
+                  class="product-card__image"
+                  src="./img/autumnal.png"
+                  alt="autumnal_coffee_img"
+                  height="300"
+                  width="300"
+                />
+                <span class="product-card__label">Sale</span>
+                <h4 class="product-card__heading">Autumnal Coffee</h4>
+                <p class="product-card__subheading">
+                  Only at Cafe and Delivery
+                </p>
+                <p class="product-card__price">
+                  $5.00
+                  <span class="product-card__price__former"
+                    ><small><s>$6.00</s></small></span
+                  >
+                </p>
+                <p class="product-card__ad"><sup>Get 20% Off in App</sup></p>
+              </article>
+            </li>
+          </ul>
+          <button class="nav-button__base nav-button__signin">Load More</button>
+        </div>
+      </section>
+    </main>
+    <footer role="contentinfo">
+      <section class="contacts" aria-labelledby="footer-location">
+        <h2 id="footer-location">Location</h2>
+        <p>Customer Service Contact Phone</p>
+        <p>We are open Sun - Mon 10AM - 22PM</p>
+        <hr />
+        <div>
+          <div class="socials" aria-label="Social media links">
+            <div class="socials-icons">
+              <a href="" aria-label="Spotify"
+                ><img src="./img/icons/spotify.svg" alt="spotify_icon"
+              /></a>
+              <a href="" aria-label="YouTube"
+                ><img src="./img/icons/youtube.svg" alt="youtube_icon"
+              /></a>
+              <a href="" aria-label="Instagram"
+                ><img src="./img/icons/insta.svg" alt="instagram_icon"
+              /></a>
+              <a href="" aria-label="Telegram"
+                ><img src="./img/icons/telegram.svg" alt="telegram_icon"
+              /></a>
+              <a href="" aria-label="TikTok"
+                ><img src="./img/icons/tiktok.svg" alt="tiktok_icon"
+              /></a>
+              <a href="" aria-label="Twitter"
+                ><img src="./img/icons/twitter.svg" alt="twitter_icon"
+              /></a>
+            </div>
+            <div>
+              <p>Delivery Order</p>
+              <div class="download">
+                <a href="" aria-label="App Store link"
+                  ><img src="./img/icons/appstore.svg" alt="appstore_button"
+                /></a>
+                <a href="" aria-label="Google Play link"
+                  ><img src="./img/icons/gplay.svg" alt="gplay_button"
+                /></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>&copy; 2025 IMAJI COFFEE; All rights reserved</p>
+          <ul>
+            <li><a href="">Terms and Conditions</a></li>
+            <li><a href="">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </section>
+    </footer>
+  </body>
+</html>
