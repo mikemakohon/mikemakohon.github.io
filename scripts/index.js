@@ -109,7 +109,7 @@ const renderProducts = () => {
 };
 
 const setupEventListeners = () => {
-  const searchInput = document.getElementById("form__search");
+  const searchInput = document.querySelector("#form__search");
   const searchClearBtn = searchInput.closest("div").querySelector("button");
 
   searchInput.addEventListener("input", (e) => {
@@ -126,7 +126,7 @@ const setupEventListeners = () => {
     renderProducts();
   });
 
-  const priceSelect = document.getElementById("form__filter-price");
+  const priceSelect = document.querySelector("#form__filter-price");
   const priceClearBtn = priceSelect.closest("div").querySelector("button");
 
   priceSelect.addEventListener("change", (e) => {
@@ -143,7 +143,7 @@ const setupEventListeners = () => {
     renderProducts();
   });
 
-  const sortSelect = document.getElementById("form__sort");
+  const sortSelect = document.querySelector("#form__sort");
   const sortClearBtn = sortSelect.closest("div").querySelector("button");
 
   sortSelect.addEventListener("change", (e) => {
