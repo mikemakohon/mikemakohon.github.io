@@ -1,7 +1,11 @@
 "use strict";
 
-import { products } from "./data.js";
+import { ProductsAPI } from "./api.js";
 
+const API_URL = "https://698ed778aded595c2532fa07.mockapi.io/api/v1/products";
+const api = new ProductsAPI(API_URL);
+
+let allProducts = [];
 let currentFilters = {
   category: "all",
   searchTerm: "",
@@ -45,55 +49,65 @@ const renderProduct = (product) => {
   </li>`;
 };
 
-const filterProducts = () => {
-  let filtered = [...products];
+const getSortParams = (sortBy) => {
+  const sortMapping = {
+    default: { sortBy: "id", order: "asc" },
+    best: { sortBy: "id", order: "asc" },
+    "price-low": { sortBy: "price", order: "asc" },
+    "price-high": { sortBy: "price", order: "desc" },
+    "name-asc": { sortBy: "name", order: "asc" },
+    "name-desc": { sortBy: "name", order: "desc" },
+  };
 
-  if (currentFilters.category !== "all") {
-    filtered = filtered.filter(
-      (product) => product.category === currentFilters.category,
-    );
+  return sortMapping[sortBy] || sortMapping["default"];
+};
+
+const loadProducts = async () => {
+  try {
+    const apiFilters = {};
+
+    if (currentFilters.category !== "all") {
+      apiFilters.category = currentFilters.category;
+    }
+
+    const sortParams = getSortParams(currentFilters.sortBy);
+    apiFilters.sortBy = sortParams.sortBy;
+    apiFilters.order = sortParams.order;
+
+    let products = await api.getAll(apiFilters);
+
+    const clientFilters = {};
+
+    if (currentFilters.searchTerm) {
+      clientFilters.search = currentFilters.searchTerm;
+    }
+
+    if (currentFilters.priceRange !== "all") {
+      clientFilters.maxPrice = currentFilters.priceRange;
+    }
+
+    products = api.applyClientFilters(products, clientFilters);
+
+    allProducts = products;
+    visibleProductsCount = PRODUCTS_PER_LOAD;
+    renderProducts();
+  } catch (error) {
+    console.error("Error loading products:", error);
   }
-
-  if (currentFilters.searchTerm) {
-    const searchLower = currentFilters.searchTerm.toLowerCase();
-    filtered = filtered.filter((product) =>
-      product.name.toLowerCase().includes(searchLower),
-    );
-  }
-
-  if (currentFilters.priceRange !== "all") {
-    const maxPrice = parseFloat(currentFilters.priceRange);
-    filtered = filtered.filter((product) => product.price <= maxPrice);
-  }
-
-  switch (currentFilters.sortBy) {
-    case "price-low":
-      filtered.sort((a, b) => a.price - b.price);
-      break;
-    case "price-high":
-      filtered.sort((a, b) => b.price - a.price);
-      break;
-    case "name-asc":
-      filtered.sort((a, b) => a.name.localeCompare(b.name));
-      break;
-    case "name-desc":
-      filtered.sort((a, b) => b.name.localeCompare(a.name));
-      break;
-    case "best":
-      break;
-    default:
-      break;
-  }
-
-  return filtered;
 };
 
 const renderProducts = () => {
   const productsDOM = document.querySelector(".product-cards > ul");
   const loadMoreBtn = document.querySelector(".product-cards > button");
 
-  const filteredProducts = filterProducts();
-  const productsToShow = filteredProducts.slice(0, visibleProductsCount);
+  const productsToShow = allProducts.slice(0, visibleProductsCount);
+
+  if (productsToShow.length === 0) {
+    productsDOM.innerHTML =
+      '<li style="grid-column: 1/-1; text-align: center; padding: 2rem;"><p>No products found matching your filters.</p></li>';
+    if (loadMoreBtn) loadMoreBtn.style.display = "none";
+    return;
+  }
 
   const renderedProductsHTML = productsToShow
     .map((product) => renderProduct(product))
@@ -101,114 +115,130 @@ const renderProducts = () => {
 
   productsDOM.innerHTML = renderedProductsHTML;
 
-  if (filteredProducts.length > visibleProductsCount) {
-    loadMoreBtn.style.display = "block";
-  } else {
-    loadMoreBtn.style.display = "none";
+  if (loadMoreBtn) {
+    if (allProducts.length > visibleProductsCount) {
+      loadMoreBtn.style.display = "block";
+    } else {
+      loadMoreBtn.style.display = "none";
+    }
   }
 };
 
 const setupEventListeners = () => {
-  const searchInput = document.querySelector("#form__search");
-  const searchClearBtn = searchInput.closest("div").querySelector("button");
+  const searchInput = document.getElementById("form__search");
+  const searchClearBtn = searchInput?.closest("div")?.querySelector("button");
 
-  searchInput.addEventListener("input", (e) => {
-    currentFilters.searchTerm = e.target.value;
-    visibleProductsCount = PRODUCTS_PER_LOAD;
-    renderProducts();
-  });
+  if (searchInput) {
+    searchInput.addEventListener("input", async (e) => {
+      currentFilters.searchTerm = e.target.value;
+      await loadProducts();
+    });
+  }
 
-  searchClearBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    searchInput.value = "";
-    currentFilters.searchTerm = "";
-    visibleProductsCount = PRODUCTS_PER_LOAD;
-    renderProducts();
-  });
+  if (searchClearBtn) {
+    searchClearBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      if (searchInput) searchInput.value = "";
+      currentFilters.searchTerm = "";
+      await loadProducts();
+    });
+  }
 
-  const priceSelect = document.querySelector("#form__filter-price");
-  const priceClearBtn = priceSelect.closest("div").querySelector("button");
+  const priceSelect = document.getElementById("form__filter-price");
+  const priceClearBtn = priceSelect?.closest("div")?.querySelector("button");
 
-  priceSelect.addEventListener("change", (e) => {
-    currentFilters.priceRange = e.target.value;
-    visibleProductsCount = PRODUCTS_PER_LOAD;
-    renderProducts();
-  });
+  if (priceSelect) {
+    priceSelect.addEventListener("change", async (e) => {
+      currentFilters.priceRange = e.target.value;
+      await loadProducts();
+    });
+  }
 
-  priceClearBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    priceSelect.value = "all";
-    currentFilters.priceRange = "all";
-    visibleProductsCount = PRODUCTS_PER_LOAD;
-    renderProducts();
-  });
+  if (priceClearBtn) {
+    priceClearBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      if (priceSelect) priceSelect.value = "all";
+      currentFilters.priceRange = "all";
+      await loadProducts();
+    });
+  }
 
-  const sortSelect = document.querySelector("#form__sort");
-  const sortClearBtn = sortSelect.closest("div").querySelector("button");
+  const sortSelect = document.getElementById("form__sort");
+  const sortClearBtn = sortSelect?.closest("div")?.querySelector("button");
 
-  sortSelect.addEventListener("change", (e) => {
-    currentFilters.sortBy = e.target.value;
-    renderProducts();
-  });
+  if (sortSelect) {
+    sortSelect.addEventListener("change", async (e) => {
+      currentFilters.sortBy = e.target.value;
+      await loadProducts();
+    });
+  }
 
-  sortClearBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    sortSelect.value = "default";
-    currentFilters.sortBy = "default";
-    renderProducts();
-  });
+  if (sortClearBtn) {
+    sortClearBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      if (sortSelect) sortSelect.value = "default";
+      currentFilters.sortBy = "default";
+      await loadProducts();
+    });
+  }
 
   const categoryButtons = document.querySelectorAll(
     ".menu-form__filters nav button",
   );
 
   categoryButtons.forEach((button, index) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", async () => {
       categoryButtons.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
 
       const categories = ["beverages", "food", "coffee-beans"];
       currentFilters.category = categories[index] || "all";
-      visibleProductsCount = PRODUCTS_PER_LOAD;
-      renderProducts();
+
+      await loadProducts();
     });
   });
 
   const loadMoreBtn = document.querySelector(".product-cards > button");
-  loadMoreBtn.addEventListener("click", () => {
-    visibleProductsCount += PRODUCTS_PER_LOAD;
-    renderProducts();
-  });
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener("click", () => {
+      visibleProductsCount += PRODUCTS_PER_LOAD;
+      renderProducts();
+    });
+  }
 };
 
 const setupPriceFilter = () => {
-  const priceSelect = document.querySelector("#form__filter-price");
-  priceSelect.innerHTML = `
-    <option value="all">All Prices</option>
-    <option value="10">Under $10</option>
-    <option value="15">Under $15</option>
-    <option value="20">Under $20</option>
-    <option value="30">Under $30</option>
-  `;
+  const priceSelect = document.getElementById("form__filter-price");
+  if (priceSelect) {
+    priceSelect.innerHTML = `
+      <option value="all">All Prices</option>
+      <option value="10">Under $10</option>
+      <option value="15">Under $15</option>
+      <option value="20">Under $20</option>
+      <option value="30">Under $30</option>
+    `;
+  }
 };
 
 const setupSortFilter = () => {
-  const sortSelect = document.querySelector("#form__sort");
-  sortSelect.innerHTML = `
-    <option value="default">Default</option>
-    <option value="best">Best Selling</option>
-    <option value="price-low">Price: Low to High</option>
-    <option value="price-high">Price: High to Low</option>
-    <option value="name-asc">Name: A to Z</option>
-    <option value="name-desc">Name: Z to A</option>
-  `;
+  const sortSelect = document.getElementById("form__sort");
+  if (sortSelect) {
+    sortSelect.innerHTML = `
+      <option value="default">Default</option>
+      <option value="best">Best Selling</option>
+      <option value="price-low">Price: Low to High</option>
+      <option value="price-high">Price: High to Low</option>
+      <option value="name-asc">Name: A to Z</option>
+      <option value="name-desc">Name: Z to A</option>
+    `;
+  }
 };
 
-const init = () => {
+const init = async () => {
   setupPriceFilter();
   setupSortFilter();
   setupEventListeners();
-  renderProducts();
+  await loadProducts();
 };
 
 if (document.readyState === "loading") {
